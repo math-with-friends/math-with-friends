@@ -1,0 +1,20 @@
+{
+  "cas": {
+    "baseUrl": "https://cas-test.its.hawaii.edu/cas/",
+    "autoClose": true
+  },
+  "public": {
+    "cas": {
+      "loginUrl": "https://cas-test.its.hawaii.edu/cas/login",
+      "serviceParam": "service",
+      "popupWidth": 810,
+      "popupHeight": 610
+    },
+    "initialDatabaseFileName": "database/initial-collection-data.json"
+  },
+  "galaxy.meteor.com": {
+    "env": {
+      "MONGO_URL": "mongodb://admin:admin@ds259255.mlab.com:59255/testdeployij"
+    }
+  }
+}
