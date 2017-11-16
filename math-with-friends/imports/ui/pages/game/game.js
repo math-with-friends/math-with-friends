@@ -25,7 +25,12 @@ Template.game.onCreated(function() {
   // Things to check before user sees game:
   // - User is logged in
   // - User's joined game exists
+  if (Meteor.userId()) {
+    console.log('user is logged in');
+  } else {
+    console.log('user is NOT logged in');
+  }
   this.game = new Phaser.Game(500, 200, Phaser.CANVAS, 'canvas');
-  this.game.state.add('main', MainScene);
+  this.game.state.add('main', MainScene());
   this.game.state.start('main');
 });
