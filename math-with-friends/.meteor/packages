@@ -28,3 +28,6 @@ vrakfall:phaser
 accounts-base
 accounts-ui
 accounts-password
+session
+autopublish
+msavin:mongol

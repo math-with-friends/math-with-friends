@@ -1,4 +1,10 @@
 import './home.html';
 
-import '../../components/hello/hello.js';
-import '../../components/info/info.js';
+import '../game/game.js';
+
+Template.App_home.events({
+  'click .join-game'(event) {
+    event.preventDefault();
+    Meteor.call('joinGame', 'test-game', Meteor.userId(), Meteor.user().profile.socketId);
+  }
+});
