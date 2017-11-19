@@ -3,6 +3,8 @@ import { Meteor } from 'meteor/meteor';
 export default class Game {
   constructor(id) {
     this.id = id;
+    this.stream = new Meteor.Streamer(this.id);
+    this.stream.allowRead('all');
     this.players = {};
 
     games[this.id] = this;
@@ -16,7 +18,7 @@ export default class Game {
   }
 
   updateGameState() {
-    console.log(_.size(this.players));
+    // console.log(_.size(this.players));
   }
 
   send() {
@@ -29,7 +31,7 @@ export default class Game {
       snapshot.push(value);
     });
 
-    io.sockets.in(this.id).emit('game-update', snapshot);
+    this.stream.emit('game-update', snapshot);
   }
 
   getPlayerPosition(userId) {
@@ -61,6 +63,6 @@ export default class Game {
   removePlayer(userId) {
     this.players[userId] = null;
     delete this.players[userId];
-    io.sockets.in(this.id).emit('game-remove', userId);
+    this.stream.emit('game-remove', userId);
   }
 }

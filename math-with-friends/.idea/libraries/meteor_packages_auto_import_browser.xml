@@ -109,6 +109,8 @@
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/accounts-base/1.4.0/web.browser/server_main.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/accounts-base/1.4.0/web.browser/server_tests.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/accounts-base/1.4.0/web.browser/client_main.js" />
+        <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/rocketchat_streamer/0.5.0/web.browser/client/client.js" />
+        <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/rocketchat_streamer/0.5.0/web.browser/lib/ev.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/diff-sequence/1.0.7/web.browser/diff.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/htmljs/1.0.11/web.browser/html.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/htmljs/1.0.11/web.browser/visitors.js" />
@@ -520,6 +522,8 @@
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/accounts-base/1.4.0/web.browser/server_main.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/accounts-base/1.4.0/web.browser/server_tests.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/accounts-base/1.4.0/web.browser/client_main.js" />
+      <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/rocketchat_streamer/0.5.0/web.browser/client/client.js" />
+      <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/rocketchat_streamer/0.5.0/web.browser/lib/ev.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/diff-sequence/1.0.7/web.browser/diff.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/htmljs/1.0.11/web.browser/html.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/htmljs/1.0.11/web.browser/visitors.js" />

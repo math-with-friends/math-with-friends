@@ -1,17 +1,15 @@
 import io from 'socket.io-client';
 
-socket = null;
+// socket = null;
 
 Meteor.startup(() => {
-  socket = io('http://localhost:8080');
-
   Accounts.onLogin(() => {
     const gameId = Meteor.user().profile.gameId;
     const userId = Meteor.userId();
-    const socketId = socket.id;
+    // const socketId = socket.id;
 
-    Meteor.call('handleDuplicateClients', userId, socketId);
-    Meteor.call('joinGame', gameId, userId, socketId);
+    // Meteor.call('handleDuplicateClients', userId, socketId);
+    Meteor.call('joinGame', gameId, userId);
   });
 });
 

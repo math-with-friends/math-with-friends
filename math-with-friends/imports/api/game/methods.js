@@ -40,17 +40,17 @@ Meteor.methods({
   sendPing(gameId, userId) {
 
   },
-  joinGame(gameId, userId, socketId) {
-    console.log('joinGame called', gameId, userId, socketId);
+  joinGame(gameId, userId) {
+    console.log('joinGame called', gameId, userId);
     const game = games[gameId];
     if (!game) {
       throw new Meteor.Error('game-nonexistent', "Cannot join a game that doesn't exist. Game ID: " + gameId);
     }
 
-    const socket = io.sockets.connected[socketId];
-    if (socket) {
-      socket.join(gameId);
-    }
+    // const socket = io.sockets.connected[socketId];
+    // if (socket) {
+    //   socket.join(gameId);
+    // }
 
     Meteor.users.update({_id: userId}, {$set: {'profile.gameId': gameId}});
 
@@ -64,14 +64,14 @@ Meteor.methods({
 
     game.removePlayer(userId);
   },
-  handleDuplicateClients(userId, socketId) {
-    console.log('handleDuplicateClients called', userId, socketId);
-    const oldSocketId = Meteor.users.findOne({_id: userId}).profile.socketId;
-    const socket = io.sockets.connected[oldSocketId];
-    if (socket) {
-      socket.disconnect();
-    }
-
-    Meteor.users.update({_id: userId}, {$set: {'profile.socketId': socketId}});
-  }
+  // handleDuplicateClients(userId, socketId) {
+  //   console.log('handleDuplicateClients called', userId, socketId);
+  //   const oldSocketId = Meteor.users.findOne({_id: userId}).profile.socketId;
+  //   const socket = io.sockets.connected[oldSocketId];
+  //   if (socket) {
+  //     socket.disconnect();
+  //   }
+  //
+  //   Meteor.users.update({_id: userId}, {$set: {'profile.socketId': socketId}});
+  // }
 });

@@ -9,6 +9,9 @@ class MainScene {
     this.gameId = Meteor.user().profile.gameId;
     this.userId = Meteor.userId();
     this.entities = {};
+
+    this.stream = new Meteor.Streamer(this.gameId);
+
   }
 
   // Required.
@@ -58,16 +61,16 @@ class MainScene {
   }
 
   createListeners() {
-    socket.on('game-update', (data) => {
+    this.stream.on('game-update', (data) => {
       this.handleServerMessage(data);
     });
 
-    socket.on('game-remove', (data) => {
+    this.stream.on('game-remove', (data) => {
       this.handleDisconnectedPlayer(data);
     });
 
     $(window).bind('beforeunload', function() {
-      Meteor.call('removePlayer', 'test-game', socket.id);
+      Meteor.call('removePlayer', this.gameId, this.userId);
     });
   }
 
