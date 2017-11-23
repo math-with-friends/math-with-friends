@@ -1,5 +1,11 @@
 <template name="App_home">
   {{> loginButtons}}
-    <button class="join-game">Join test-game</button>
-  {{> game}}
+  <!--&lt;!&ndash;<button class="join-game">Join test-game</button>&ndash;&gt;-->
+  <!--game-->
+  <button class="create-room">Create Room</button>
+  <ul>
+    {{#each getLobbies}}
+      <li>{{this}}</li>
+    {{/each}}
+  </ul>
 </template>

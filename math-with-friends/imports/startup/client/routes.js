@@ -6,6 +6,7 @@ import '../../ui/layouts/body/body.js';
 import '../../ui/pages/home/home.js';
 import '../../ui/pages/not-found/not-found.js';
 import '../../ui/pages/game/game.js';
+import '../../ui/pages/lobby/lobby.js';
 
 // Set up all routes in the app
 FlowRouter.route('/', {
@@ -19,7 +20,13 @@ FlowRouter.route('/game', {
   action() {
     BlazeLayout.render('App_body', { main: 'game' });
   }
-})
+});
+
+FlowRouter.route('/lobby', {
+  action() {
+    BlazeLayout.render('App_body', { main: 'lobby' });
+  }
+});
 
 FlowRouter.notFound = {
   action() {

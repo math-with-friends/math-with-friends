@@ -1,0 +1,9 @@
+<template name="lobby">
+  <ul>
+    {{#each getPlayersList}}
+      <li>{{this}}</li>
+    {{/each}}
+  </ul>
+  <button class="ready">Ready</button>
+  <button class="goto">goto game</button>
+</template>
