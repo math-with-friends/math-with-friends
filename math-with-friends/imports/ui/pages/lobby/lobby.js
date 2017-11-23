@@ -15,6 +15,7 @@ Template.lobby.onCreated(function () {
           this.stream = new Meteor.Streamer(this.id);
 
           this.stream.on('lobby-players-list', (data) => {
+            console.log('lobby-players-list');
             this.playersList = data;
             this.playersListDep.changed();
           });
@@ -26,7 +27,7 @@ Template.lobby.onCreated(function () {
           this.pingHandler = Meteor.setInterval(() => {
             console.log('ping');
             Meteor.call('pingLobby', this.id, Meteor.userId())
-          }, 2000);
+            }, 1000);
         }
       });
 
@@ -36,6 +37,7 @@ Template.lobby.onCreated(function () {
 
 Template.lobby.onDestroyed(function () {
   if (this.stream) {
+    delete Meteor.StreamerCentral.instances[this.id];
     this.stream = null;
   }
   if (this.pingHandler) {
@@ -58,6 +60,11 @@ Template.lobby.events({
 
   'click .goto'(event) {
     event.preventDefault();
-    FlowRouter.go('/game');
+    Session.set('template', 'game');
+  },
+
+  'click .exit'(event) {
+    event.preventDefault();
+    Session.set('template', 'channel');
   }
 });

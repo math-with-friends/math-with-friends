@@ -29,8 +29,8 @@ export default class Lobby {
 
     lobbies[this.id] = this;
 
-    this.updateHandle = Meteor.setInterval(() => this.update(), 2000);
-    this.sendHandle = Meteor.setInterval(() => this.send(), 2000);
+    this.updateHandle = Meteor.setInterval(() => this.update(), 1000);
+    this.sendHandle = Meteor.setInterval(() => this.send(), 1000);
   }
 
   cleanUp() {
@@ -56,7 +56,7 @@ export default class Lobby {
   updateInactivePlayers() {
     if (this.state == 1) {
       _.each(this.players, (player) => {
-        if (new Date() - player.ping > 5000) {
+        if (new Date() - player.ping > 2000) {
           this.removePlayer(player.userId);
         }
       });

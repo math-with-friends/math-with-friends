@@ -12,8 +12,15 @@ Meteor.startup(() => {
   // new Game('test-game');
   const stream = new Meteor.Streamer('test');
   stream.allowRead('all');
+
   Meteor.setInterval(() => {
-    stream.emit('test', _.map(lobbies, (lobby) => {return lobby.id}));
+    const lobbiesToSend = _.map(lobbies, (lobby) => {
+      return {
+        id: lobby.id,
+        state: lobby.state
+      }
+    })
+    stream.emit('test', lobbiesToSend);
 
     _.each(lobbies, (lobby) => {
       if (lobby.state == 3) {

@@ -13,6 +13,7 @@ Meteor.methods({
   joinLobby(lobbyId, userId) {
     const lobby = lobbies[lobbyId];
 
+    Meteor.users.update({_id: userId}, {$set: {'profile.lobbyId': lobbyId}});
     lobby.addPlayer(userId);
   },
 
@@ -35,10 +36,6 @@ Meteor.methods({
     const lobby = lobbies[lobbyId];
 
     lobby.increaseReadyCount();
-  },
-
-  test() {
-    console.log('test');
   }
 
   // signalGo() {

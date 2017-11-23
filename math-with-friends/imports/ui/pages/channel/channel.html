@@ -1,0 +1,10 @@
+<template name="channel">
+  {{> loginButtons}}
+
+  <button class="create-lobby">Create Lobby</button>
+  <ul>
+    {{#each getLobbies}}
+      <li class="join-lobby">{{id}}</li>
+    {{/each}}
+  </ul>
+</template>
