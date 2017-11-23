@@ -7,6 +7,7 @@ import '../../ui/pages/home/home.js';
 import '../../ui/pages/not-found/not-found.js';
 import '../../ui/pages/game/game.js';
 import '../../ui/pages/lobby/lobby.js';
+import '../../ui/pages/user-profile/user-profile.js';
 
 // Set up all routes in the app
 FlowRouter.route('/', {
