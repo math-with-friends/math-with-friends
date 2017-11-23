@@ -27,6 +27,15 @@ FlowRouter.route('/lobby', {
     BlazeLayout.render('App_body', { main: 'lobby' });
   }
 });
+<<<<<<< HEAD
+=======
+
+FlowRouter.route('/user-profile', {
+  action() {
+    BlazeLayout.render('App_body', { main: 'User_Profile' });
+  }
+})
+>>>>>>> issue-3
 
 FlowRouter.notFound = {
   action() {
