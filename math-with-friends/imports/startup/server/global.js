@@ -9,7 +9,7 @@ lobbies = {};
 
 Meteor.startup(() => {
   // new Lobby('test-game');
-  // new Game('test-game');
+  new Game('test-game');
   const stream = new Meteor.Streamer('test');
   stream.allowRead('all');
 
@@ -17,7 +17,8 @@ Meteor.startup(() => {
     const lobbiesToSend = _.map(lobbies, (lobby) => {
       return {
         id: lobby.id,
-        state: lobby.state
+        state: lobby.state,
+        playerCount: _.size(lobby.players)
       }
     })
     stream.emit('test', lobbiesToSend);

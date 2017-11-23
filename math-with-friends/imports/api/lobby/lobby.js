@@ -57,7 +57,7 @@ export default class Lobby {
     if (this.state == 1) {
       _.each(this.players, (player) => {
         if (new Date() - player.ping > 2000) {
-          this.removePlayer(player.userId);
+          this.removePlayer(player.id);
         }
       });
     }
@@ -86,7 +86,7 @@ export default class Lobby {
 
       // Don't re-add existing players.
       if (!this.players[userId]) {
-        this.players[userId] = { userId: userId, ready: false, ping: new Date()};
+        this.players[userId] = { id: userId, ready: false, ping: new Date()};
 
         // If this is the first player to ever join the lobby, enable destroying of lobby.
         if (this.state == 0) {
@@ -122,8 +122,8 @@ export default class Lobby {
       console.log('Could not start game because not all players are ready!');
     } else {
       new Game(lobbyId);
-      _.each(this.players, (userId) => {
-        this.addPlayer(userId);
+      _.each(this.players, (player) => {
+        Meteor.call('joinGame', 'test-game', player.id);
       });
 
       this.stream.emit('lobby-start-game');

@@ -21,7 +21,7 @@ Template.lobby.onCreated(function () {
           });
 
           this.stream.on('lobby-start-game', () => {
-            window.open(FlowRouter.path('/game'), 'Game!', 'resizable,width=800,height=620,left=0,top=0');
+            Session.set('template', 'game');
           });
 
           this.pingHandler = Meteor.setInterval(() => {
@@ -55,7 +55,7 @@ Template.lobby.helpers({
 Template.lobby.events({
   'click .ready'(event) {
     event.preventDefault();
-    Meteor.call('signalReady', 'test-game');
+    Meteor.call('signalReady', Template.instance().id);
   },
 
   'click .goto'(event) {

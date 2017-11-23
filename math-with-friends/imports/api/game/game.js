@@ -34,6 +34,12 @@ export default class Game {
     this.stream.emit('game-update', snapshot);
   }
 
+  ping(userId) {
+    if (this.players[userId]) {
+      this.players[userId].ping = new Date();
+    }
+  }
+
   getPlayerPosition(userId) {
     const player = this.players[userId];
     if (!player) {
@@ -49,7 +55,7 @@ export default class Game {
 
   addPlayer(userId, x, y) {
     if (!this.players[userId]) {
-      this.players[userId] = { id: userId, x: x, y: y };
+      this.players[userId] = { id: userId, x: x, y: y, ping: new Date() };
     }
   }
 

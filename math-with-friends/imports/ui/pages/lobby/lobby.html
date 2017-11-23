@@ -1,10 +1,10 @@
 <template name="lobby">
+  <h1>Players List</h1>
   <ul>
     {{#each getPlayersList}}
-      <li>{{this}}</li>
+      <li>ID: {{id}}, Ready: {{#if ready}} true {{else}} false {{/if}}</li>
     {{/each}}
   </ul>
   <button class="ready">Ready</button>
-  <button class="goto">goto game</button>
   <button class="exit">Exit</button>
 </template>

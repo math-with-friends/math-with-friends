@@ -1,3 +1,46 @@
 <template name="App_home">
-  {{> Template.dynamic template=getTemplate}}
+  <div class="ui inverted vertical center aligned segment">
+    <div class="ui container">
+      <div class="ui large secondary inverted menu">
+        {{> loginButtons}}
+      </div>
+    </div>
+
+    <div class="ui text container">
+      <h1 class="ui inverted header">
+        Math With Friends
+      </h1>
+      <img class="ui image item" src="">
+      <h2>Improve your math skills while having fun with your friends!</h2>
+    </div>
+  </div>
+
+  <div class="ui container">
+    {{> Template.dynamic template=getTemplate}}
+  </div>
+
+  <div class="ui inverted vertical footer segment">
+    <div class="ui container">
+      <div class="ui stackable inverted divided equal height stackable grid">
+        <div class="three wide column">
+          <h4 class="ui inverted header">About</h4>
+          <div class="ui inverted link list">
+            <a href="#" class="item">Test</a>
+
+          </div>
+        </div>
+        <div class="three wide column">
+          <h4 class="ui inverted header">University</h4>
+          <div class="ui inverted link list">
+            <a href="#" class="item">test</a>
+
+          </div>
+        </div>
+        <div class="seven wide column">
+          <h4 class="ui inverted header">Footer Header</h4>
+          <p>Extra.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
