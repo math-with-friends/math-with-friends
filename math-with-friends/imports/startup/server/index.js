@@ -3,3 +3,4 @@
 import './accounts.js';
 import './global.js';
 import '../../api/game/methods.js';
+import '../../api/lobby/methods.js';

@@ -9,7 +9,8 @@ Meteor.startup(() => {
     // const socketId = socket.id;
 
     // Meteor.call('handleDuplicateClients', userId, socketId);
-    Meteor.call('joinGame', gameId, userId);
+    // Meteor.call('joinGame', gameId, userId);
+    // Meteor.call('joinLobby', 'test-game', userId);
   });
 });
 
