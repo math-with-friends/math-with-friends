@@ -32,7 +32,7 @@ FlowRouter.route('/user-profile', {
   action() {
     BlazeLayout.render('App_body', { main: 'User_Profile' });
   }
-})
+});
 
 FlowRouter.notFound = {
   action() {
