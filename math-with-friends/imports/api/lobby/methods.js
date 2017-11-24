@@ -8,6 +8,8 @@ Meteor.methods({
 
     Meteor.users.update({_id: userId}, {$set: {'profile.lobbyId': lobbyId}});
     lobby.addPlayer(userId);
+
+    return true;
   },
 
   joinLobby(lobbyId, userId) {

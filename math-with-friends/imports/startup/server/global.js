@@ -9,7 +9,7 @@ lobbies = {};
 
 Meteor.startup(() => {
   // new Lobby('test-game');
-  new Game('test-game');
+  // new Game('test-game');
   const stream = new Meteor.Streamer('test');
   stream.allowRead('all');
 
@@ -24,7 +24,7 @@ Meteor.startup(() => {
     stream.emit('test', lobbiesToSend);
 
     _.each(lobbies, (lobby) => {
-      if (lobby.state == 3) {
+      if (lobby.state == 2 || lobby.state == 3) {
         lobby.cleanUp();
         delete lobbies[lobby.id];
       }

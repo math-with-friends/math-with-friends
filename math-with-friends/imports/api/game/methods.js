@@ -36,10 +36,12 @@ Meteor.methods({
     game.modifyPlayer(userId, x, y);
   },
 
-  // Player, if  sends
-  sendPing(gameId, userId) {
+  pingGame(gameId, userId) {
+    const game = games[gameId];
 
+    game.ping(userId);
   },
+
   joinGame(gameId, userId) {
     console.log('joinGame called', gameId, userId);
     const game = games[gameId];
@@ -55,6 +57,7 @@ Meteor.methods({
     Meteor.users.update({_id: userId}, {$set: {'profile.gameId': gameId}});
 
     game.addPlayer(userId, 0, 0);
+    return true;
   },
   removePlayer(gameId, userId) {
     const game = games[gameId];

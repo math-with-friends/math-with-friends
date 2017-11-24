@@ -57,6 +57,7 @@ export default class Lobby {
     if (this.state == 1) {
       _.each(this.players, (player) => {
         if (new Date() - player.ping > 2000) {
+          console.log('inactiveplayer removed');
           this.removePlayer(player.id);
         }
       });
@@ -90,6 +91,7 @@ export default class Lobby {
 
         // If this is the first player to ever join the lobby, enable destroying of lobby.
         if (this.state == 0) {
+          console.log('player added, change state');
           this.changeState(1);
         }
       }
@@ -121,12 +123,14 @@ export default class Lobby {
     if (_.size(this.players) != (this.readyCount )) {
       console.log('Could not start game because not all players are ready!');
     } else {
-      new Game(lobbyId);
-      _.each(this.players, (player) => {
-        Meteor.call('joinGame', 'test-game', player.id);
-      });
+      const game = new Game(lobbyId);
+      // _.each(this.players, (player) => {
+      //   console.log('player profile.gameId set in lobby api');
+      //   Meteor.users.update({_id: player.id}, {$set: {'profile.gameId': lobbyId}});
+      //   game.addPlayer(player.id, 0, 0);
+      // });
 
-      this.stream.emit('lobby-start-game');
+      this.stream.emit('lobby-start-game', lobbyId);
       this.changeState(2);
     }
   }

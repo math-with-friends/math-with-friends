@@ -7,11 +7,17 @@ class MainScene {
   constructor(game) {
     this.game = game;
     this.gameId = Meteor.user().profile.gameId;
+    console.log('GAMEID: ', this.gameId);
     this.userId = Meteor.userId();
     this.entities = {};
 
-    this.stream = new Meteor.Streamer(this.gameId);
+    // this.stream = new Meteor.Streamer(this.gameId);
 
+  }
+
+  init(stream) {
+    console.log('game init');
+    this.stream = stream;
   }
 
   // Required.
@@ -69,7 +75,7 @@ class MainScene {
       this.handleDisconnectedPlayer(data);
     });
 
-    $(window).bind('beforeunload', function() {
+    $(window).bind('beforeunload', function () {
       Meteor.call('removePlayer', this.gameId, this.userId);
     });
   }
@@ -116,13 +122,16 @@ class MainScene {
 
     if (this.cursor.left.isDown) {
       this.player.body.velocity.x = -100;
-    } else if (this.cursor.right.isDown) {
-      this.player.body.velocity.x = 100;
-    }if (this.cursor.up.isDown) {
+    } else
+      if (this.cursor.right.isDown) {
+        this.player.body.velocity.x = 100;
+      }
+    if (this.cursor.up.isDown) {
       this.player.body.velocity.y = -100;
-    } else if (this.cursor.down.isDown) {
-      this.player.body.velocity.y = 100;
-    }
+    } else
+      if (this.cursor.down.isDown) {
+        this.player.body.velocity.y = 100;
+      }
 
     Meteor.call('sendPlayerPosition', this.gameId, this.userId, this.player.body.position.x, this.player.body.position.y);
   }
@@ -155,28 +164,41 @@ class MainScene {
   }
 }
 
-Template.game.onCreated(function() {
+Template.game.onCreated(function () {
   // Things to check before user sees game:
   // - User is logged in
   // - User's joined game exists
   this.game = new Phaser.Game(500, 200, Phaser.CANVAS, 'canvas');
+  this.id = null;
+  this.pingHandler = null;
+  this.stream = null;
 
-  this.autorun(() => {
-    // If user is logged in..
-    if (Meteor.user()) {
-      // Check the validity of the game that s/he is in..
-      Meteor.call('checkGameStatus', Meteor.user().profile.gameId, (err, res) => {
-        // If all is good, start the game!
-        if (res) {
-          this.game.state.add('main', MainScene);
-          this.game.state.start('main');
-        }
-      });
+  // Check the validity of the game that s/he is in..
+  Meteor.call('checkGameStatus', Meteor.user().profile.gameId, (err, res) => {
+    // If all is good, start the game!
+    if (res) {
+      this.id = Meteor.user().profile.gameId;
+
+      this.pingHandler = Meteor.setInterval(() => {
+        Meteor.call('pingGame', this.id, Meteor.userId())
+      }, 1000);
+
+      this.stream = new Meteor.Streamer(this.id);
+
+      this.game.state.add('main', MainScene);
+      this.game.state.start('main', true, false, this.stream);
     } else {
-      // If the user is not logged in, clear the game currently running on screen..
-      if (this.game.state.checkState('main')) {
-        this.game.state.remove('main');
-      }
+      console.log('game check failed');
     }
-  })
+  });
+});
+
+Template.game.onDestroyed(function () {
+  if (this.stream) {
+    delete Meteor.StreamerCentral.instances[this.id];
+    this.stream = null;
+  }
+  if (this.pingHandler) {
+    Meteor.clearInterval(this.pingHandler);
+  }
 });

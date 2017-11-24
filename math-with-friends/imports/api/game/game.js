@@ -6,6 +6,7 @@ export default class Game {
     this.stream = new Meteor.Streamer(this.id);
     this.stream.allowRead('all');
     this.players = {};
+    this.state = 0;
 
     games[this.id] = this;
 
@@ -15,10 +16,25 @@ export default class Game {
 
   update() {
     this.updateGameState();
+    this.updateInactivePlayers();
   }
 
   updateGameState() {
-    // console.log(_.size(this.players));
+    if (this.state == 1) {
+      if (!_.size(this.players) > 0) {
+        // Mark this game ready for deletion.
+        this.changeState(3);
+      }
+    }  }
+
+  updateInactivePlayers() {
+    if (this.state == 1) {
+      _.each(this.players, (player) => {
+        if (new Date() - player.ping > 2000) {
+          this.removePlayer(player.id);
+        }
+      });
+    }
   }
 
   send() {
@@ -40,6 +56,11 @@ export default class Game {
     }
   }
 
+  changeState(state) {
+    this.state = state;
+    this.stream.emit('game-state-change', this.state);
+  }
+
   getPlayerPosition(userId) {
     const player = this.players[userId];
     if (!player) {
@@ -54,8 +75,14 @@ export default class Game {
   }
 
   addPlayer(userId, x, y) {
-    if (!this.players[userId]) {
-      this.players[userId] = { id: userId, x: x, y: y, ping: new Date() };
+    if (this.state == 0 || this.state == 1) {
+      if (!this.players[userId]) {
+        this.players[userId] = { id: userId, x: x, y: y, ping: new Date() };
+
+        if (this.state == 0) {
+          this.changeState(1);
+        }
+      }
     }
   }
 

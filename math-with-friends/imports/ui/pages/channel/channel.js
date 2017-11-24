@@ -30,13 +30,17 @@ Template.channel.helpers({
 Template.channel.events({
   'click .create-lobby'(event) {
     event.preventDefault();
-    Meteor.call('createLobby', Meteor.userId());
-    Session.set('template', 'lobby');
+    Meteor.call('createLobby', Meteor.userId(), (err, res) => {
+      if (res) {
+        Session.set('template', 'lobby');
+      }
+    });
   },
 
   'click .join-lobby'(event, instance) {
     event.preventDefault();
-    Meteor.call('joinLobby', this.id, Meteor.userId());
-    Session.set('template', 'lobby');
+    Meteor.call('joinLobby', this.id, Meteor.userId(), () => {
+      Session.set('template', 'lobby');
+    });
   }
 });
