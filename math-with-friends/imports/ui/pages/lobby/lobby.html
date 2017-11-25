@@ -1,10 +1,33 @@
 <template name="lobby">
   <h1>Players List</h1>
-  <ul>
+
+  <!--Controls-->
+  <div class="ui container">
+    <button class="ui button ready">Ready</button>
+    <button class="ui button exit">Exit</button>
+  </div>
+
+  <!--Players in lobby-->
+  <div class="ui four column grid">
     {{#each getPlayersList}}
-      <li>ID: {{id}}, Ready: {{#if ready}} true {{else}} false {{/if}}</li>
+      <div class="column">
+        <div class="ui segment">
+          ID: {{id}} <br>
+          Ready: {{#if ready}} true {{else}} false {{/if}}
+        </div>
+      </div>
     {{/each}}
-  </ul>
-  <button class="ready">Ready</button>
-  <button class="exit">Exit</button>
+  </div>
+
+  <!--Chat-->
+  <div class="ui segment">
+    <div class="chat">
+      {{#each getChatList}}
+        <b>{{userId}}:</b> {{message}} <br>
+      {{/each}}
+    </div>
+  </div>
+  <div class="ui input">
+    <input type="text" placeholder="Type in a message and press ENTER to send...">
+  </div>
 </template>

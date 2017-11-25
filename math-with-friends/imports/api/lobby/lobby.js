@@ -75,6 +75,10 @@ export default class Lobby {
     }
   }
 
+  chat(userId, message) {
+    this.stream.emit('lobby-chat', userId, message);
+  }
+
   ping(userId) {
     if (this.players[userId]) {
       this.players[userId].ping = new Date();

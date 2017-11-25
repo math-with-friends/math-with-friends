@@ -28,6 +28,15 @@ Meteor.methods({
     return true;
   },
 
+  chatLobby(lobbyId, userId, message) {
+    const lobby = lobbies[lobbyId];
+    if (!lobby) {
+      throw new Meteor.Error('lobby-nonexistent', "Cannot chat in a lobby that doesn't exist. Lobby ID: " + lobbyId);
+    }
+
+    lobby.chat(userId, message);
+  },
+
   pingLobby(lobbyId, userId) {
     const lobby = lobbies[lobbyId];
 

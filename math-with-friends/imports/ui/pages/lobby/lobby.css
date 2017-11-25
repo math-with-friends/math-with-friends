@@ -1,0 +1,8 @@
+.chat {
+  height: 200px;
+  overflow-y: scroll;
+}
+
+.ui.input {
+  width: 100%;
+}
