@@ -51,10 +51,10 @@ Meteor.methods({
     lobby.ping(userId);
   },
 
-  signalReady(lobbyId) {
+  toggleReady(lobbyId, userId) {
     const lobby = lobbies[lobbyId];
 
-    lobby.increaseReadyCount();
+    lobby.toggleReady(userId);
   }
 
   // signalGo() {

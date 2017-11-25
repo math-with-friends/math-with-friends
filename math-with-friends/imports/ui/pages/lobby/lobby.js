@@ -64,9 +64,9 @@ Template.lobby.helpers({
 });
 
 Template.lobby.events({
-  'click .ready'(event) {
+  'click .ready'(event, instance) {
     event.preventDefault();
-    Meteor.call('signalReady', Template.instance().id);
+    Meteor.call('toggleReady', instance.id, Meteor.userId());
   },
 
   'keypress .ui.input input'(event, instance) {

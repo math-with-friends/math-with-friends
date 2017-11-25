@@ -118,28 +118,24 @@ export default class Lobby {
     console.log('change state', state);
   }
 
-  increaseReadyCount() {
-    this.readyCount++;
+  toggleReady(userId) {
+    this.players[userId].ready = !this.players[userId].ready;
 
-    // ASSUME WE'RE NOT USING READY -> GO MECHANISM. For testing purposes let's start the game
-    // when everyone in the lobby is ready.
-    this.startGame(this.id);
+    // Check if everyone in the lobby is ready.
+    if (_.every(this.players, (player) => { return player.ready })) {
+      this.startGame(this.id);
+    }
   }
 
   startGame(lobbyId) {
-    // -1 because leader cannot press ready.
-    if (_.size(this.players) != (this.readyCount )) {
-      console.log('Could not start game because not all players are ready!');
-    } else {
-      const game = new Game(lobbyId);
-      // _.each(this.players, (player) => {
-      //   console.log('player profile.gameId set in lobby api');
-      //   Meteor.users.update({_id: player.id}, {$set: {'profile.gameId': lobbyId}});
-      //   game.addPlayer(player.id, 0, 0);
-      // });
+    const game = new Game(lobbyId);
+    // _.each(this.players, (player) => {
+    //   console.log('player profile.gameId set in lobby api');
+    //   Meteor.users.update({_id: player.id}, {$set: {'profile.gameId': lobbyId}});
+    //   game.addPlayer(player.id, 0, 0);
+    // });
 
-      this.stream.emit('lobby-start-game', lobbyId);
-      this.changeState(2);
-    }
+    this.stream.emit('lobby-start-game', lobbyId);
+    this.changeState(2);
   }
 }
