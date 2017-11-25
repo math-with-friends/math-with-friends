@@ -33,14 +33,20 @@ Template.channel.events({
     Meteor.call('createLobby', Meteor.userId(), (err, res) => {
       if (res) {
         Session.set('template', 'lobby');
+      } else {
+        console.log('Cannot join this lobby.');
       }
     });
   },
 
   'click .join-lobby'(event, instance) {
     event.preventDefault();
-    Meteor.call('joinLobby', this.id, Meteor.userId(), () => {
-      Session.set('template', 'lobby');
+    Meteor.call('joinLobby', this.id, Meteor.userId(), (err, res) => {
+      if (res) {
+        Session.set('template', 'lobby');
+      } else {
+        console.log('Cannot join this lobby.');
+      }
     });
   }
 });

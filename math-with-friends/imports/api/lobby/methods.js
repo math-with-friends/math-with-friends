@@ -6,17 +6,25 @@ Meteor.methods({
     const lobbyId = Random.id();
     const lobby = new Lobby(lobbyId);
 
-    Meteor.users.update({_id: userId}, {$set: {'profile.lobbyId': lobbyId}});
-    lobby.addPlayer(userId);
+    // addPlayer(userId) returns true if player can be added, returns false otherwise.
+    if (lobby.addPlayer(userId)) {
+      Meteor.users.update({_id: userId}, {$set: {'profile.lobbyId': lobbyId}});
+      return true;
+    }
 
-    return true;
+    return false;
   },
 
   joinLobby(lobbyId, userId) {
     const lobby = lobbies[lobbyId];
 
-    Meteor.users.update({_id: userId}, {$set: {'profile.lobbyId': lobbyId}});
-    lobby.addPlayer(userId);
+    // addPlayer(userId) returns true if player can be added, returns false otherwise.
+    if (lobby.addPlayer(userId)) {
+      Meteor.users.update({_id: userId}, {$set: {'profile.lobbyId': lobbyId}});
+      return true;
+    };
+
+    return false;
   },
 
   checkLobbyStatus(lobbyId) {

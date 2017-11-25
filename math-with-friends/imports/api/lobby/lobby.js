@@ -98,8 +98,12 @@ export default class Lobby {
           console.log('player added, change state');
           this.changeState(1);
         }
+
+        return true;
       }
     }
+
+    return false;
   }
 
   removePlayer(userId) {
