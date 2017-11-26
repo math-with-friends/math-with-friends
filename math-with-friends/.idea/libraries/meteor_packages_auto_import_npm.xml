@@ -895,6 +895,8 @@
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/johanbrook_publication-collector/1.0.10/npm/node_modules/es5-ext/date/valid-date.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/johanbrook_publication-collector/1.0.10/npm/node_modules/es5-ext/date/index.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/johanbrook_publication-collector/1.0.10/npm/node_modules/es5-ext/global.js" />
+        <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/atoy40_accounts-cas/0.0.2/npm/node_modules/cas/index.js" />
+        <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/atoy40_accounts-cas/0.0.2/npm/node_modules/cas/lib/cas.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/johanbrook_publication-collector/1.0.10/npm/node_modules/es5-ext/index.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/johanbrook_publication-collector/1.0.10/npm/node_modules/deep-is/index.js" />
         <item url="file://$USER_HOME$/AppData/Local/.meteor/packages/johanbrook_publication-collector/1.0.10/npm/node_modules/core-js/modules/library/_redefine.js" />
@@ -11892,6 +11894,8 @@
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/johanbrook_publication-collector/1.0.10/npm/node_modules/es5-ext/date/valid-date.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/johanbrook_publication-collector/1.0.10/npm/node_modules/es5-ext/date/index.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/johanbrook_publication-collector/1.0.10/npm/node_modules/es5-ext/global.js" />
+      <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/atoy40_accounts-cas/0.0.2/npm/node_modules/cas/index.js" />
+      <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/atoy40_accounts-cas/0.0.2/npm/node_modules/cas/lib/cas.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/johanbrook_publication-collector/1.0.10/npm/node_modules/es5-ext/index.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/johanbrook_publication-collector/1.0.10/npm/node_modules/deep-is/index.js" />
       <root url="file://$USER_HOME$/AppData/Local/.meteor/packages/johanbrook_publication-collector/1.0.10/npm/node_modules/core-js/modules/library/_redefine.js" />

@@ -3,16 +3,19 @@ import io from 'socket.io-client';
 // socket = null;
 
 Meteor.startup(() => {
-  Session.set('template', 'channel');
+  Session.set('template', 'landing');
 
   Accounts.onLogin(() => {
+    console.log('onLogin');
     const gameId = Meteor.user().profile.gameId;
     const userId = Meteor.userId();
-    // const socketId = socket.id;
 
-    // Meteor.call('handleDuplicateClients', userId, socketId);
-    // Meteor.call('joinGame', gameId, userId);
-    // Meteor.call('joinLobby', 'test-game', userId);
+    Session.set('template', 'channel');
+  });
+
+  Accounts.onLogout(() => {
+    console.log('onLogout');
+    Session.set('template', 'landing');
   });
 });
 

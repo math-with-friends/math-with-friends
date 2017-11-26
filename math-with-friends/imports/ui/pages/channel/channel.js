@@ -13,6 +13,7 @@ Template.channel.onCreated(function() {
 });
 
 Template.channel.onDestroyed(function() {
+  console.log('channel onDestroyed');
   if (this.stream) {
     delete Meteor.StreamerCentral.instances['test'];
     this.stream = null;

@@ -2,7 +2,7 @@
   "name": "math-with-friends",
   "private": true,
   "scripts": {
-    "start": "meteor run",
+    "start": "meteor run --settings ../config/settings.development.json",
     "deploy": "meteor deploy mathwithfriends.meteorapp.com --owner ics314f17 --settings ../config/settings.development.json"
   },
   "dependencies": {
