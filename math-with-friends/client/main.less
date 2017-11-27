@@ -1,4 +1,4 @@
-@import "{}/imports/ui/stylesheets/not-found.less";
+@import "../imports/ui/stylesheets/not-found.less";
 
 body ::-webkit-scrollbar {
   -webkit-appearance: none;
@@ -18,9 +18,14 @@ body ::-webkit-scrollbar-track {
   border-radius: 5px;
 }
 
+@media only screen and (min-width : 867px) {
+  .ui.container {
+    width: 750px!important;
+  }
+}
+
 .ui.container {
   padding: 1rem 0;
-  margin: 1rem 0;
 }
 
 .ui.segment {
