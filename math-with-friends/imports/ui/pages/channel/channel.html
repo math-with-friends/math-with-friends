@@ -1,5 +1,6 @@
 <template name="channel">
   <div class="ui container">
+
     <h1> Lobby List </h1>
     <div class="ui segment">
       {{#each getLobbies}}
@@ -12,5 +13,20 @@
       {{/each}}
     </div>
     <button class="create-lobby">Create Lobby</button>
+
+    <!--Chat-->
+    <div class="twelve wide column">
+      <div class="ui segment">
+        <div class="chat">
+          {{#each getChatList}}
+            <b>{{userId}}:</b> {{message}} <br>
+          {{/each}}
+        </div>
+      </div>
+      <div class="ui input">
+        <input type="text" placeholder="Type in a message and press ENTER to send...">
+      </div>
+    </div>
+
   </div>
 </template>
