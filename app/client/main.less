@@ -1,0 +1,33 @@
+@import "../imports/ui/stylesheets/not-found.less";
+
+body ::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 10px;
+}
+
+body ::-webkit-scrollbar-thumb {
+  cursor: pointer;
+  border-radius: 5px;
+  background: rgba(0,0,0,.25);
+  -webkit-transition: color .2s ease;
+  transition: color .2s ease;
+}
+
+body ::-webkit-scrollbar-track {
+  background: rgba(0,0,0,.1);
+  border-radius: 5px;
+}
+
+@media only screen and (min-width : 867px) {
+  .ui.container {
+    width: 750px!important;
+  }
+}
+
+.ui.container {
+  padding: 1rem 0;
+}
+
+.ui.segment {
+  box-shadow: none;
+}

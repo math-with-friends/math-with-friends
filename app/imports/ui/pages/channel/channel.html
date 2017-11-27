@@ -1,0 +1,16 @@
+<template name="channel">
+  <div class="ui container">
+    <h1> Lobby List </h1>
+    <div class="ui segment">
+      {{#each getLobbies}}
+        <div class="ui segment">
+          <p>ID: {{id}}</p>
+          <p>State: {{state}}</p>
+          <p>Player Count: {{playerCount}}</p>
+          <button class="ui button join-lobby">Join</button>
+        </div>
+      {{/each}}
+    </div>
+    <button class="create-lobby">Create Lobby</button>
+  </div>
+</template>

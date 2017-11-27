@@ -1,0 +1,12 @@
+<template name="App_home">
+  <!--Menu-->
+  <div class="ui container">
+    <div class="ui menu">
+      <div class="right item">
+        <button class="ui login button">{{getLoginStatus}}</button>
+      </div>
+    </div>
+  </div>
+
+  {{> Template.dynamic template=getTemplate}}
+</template>
