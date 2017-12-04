@@ -1,4 +1,5 @@
 import './game.html';
+import './game.css';
 
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';

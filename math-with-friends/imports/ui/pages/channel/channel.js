@@ -39,6 +39,10 @@ Template.channel.helpers({
   getChatList() {
     Template.instance().chatListDep.depend();
     return Template.instance().chatList;
+  },
+
+  getUsername() {
+    return Meteor.userId();
   }
 });
 

@@ -5,6 +5,7 @@
 
 #profile-view {
   height: 100%;
+  text-align: center;
 }
 
 #chat {
@@ -16,19 +17,15 @@
   height: 100%;
 }
 
-#create-lobby-button {
-  position: absolute;
-  bottom: 1rem;
-  left: 1rem;
-}
+/*#create-lobby-button {*/
+  /*position: absolute;*/
+  /*bottom: 1rem;*/
+  /*left: 1rem;*/
+/*}*/
 
 img {
   display: block;
   height: 130px;
   margin: 0 auto;
-}
-
-svg {
-  fill: #dedede!important;
-  stroke: #dedede!important;
+  margin-bottom: 0.25rem;
 }
