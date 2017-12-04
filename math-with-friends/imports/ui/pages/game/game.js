@@ -168,7 +168,7 @@ Template.game.onCreated(function () {
   // Things to check before user sees game:
   // - User is logged in
   // - User's joined game exists
-  this.game = new Phaser.Game(500, 200, Phaser.CANVAS, 'canvas');
+  this.game = new Phaser.Game(500, 200, Phaser.CANVAS, 'canvas', undefined, true);
   this.id = null;
   this.pingHandler = null;
   this.stream = null;
