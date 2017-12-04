@@ -1,35 +1,49 @@
 import './channel.html';
+import './channel.css';
 
 import '../game/game.js';
 
 Template.channel.onCreated(function() {
-  this.lobbies = [];
-  this.lobbiesDep = new Tracker.Dependency;
+  this.lobbyList = [];
+  this.lobbyListDep = new Tracker.Dependency;
+
+  this.chatList = [];
+  this.chatListDep = new Tracker.Dependency;
+
   this.stream = new Meteor.Streamer('test');
+
   this.stream.on('test', (data) => {
-    this.lobbies = _.toArray(data);
-    this.lobbiesDep.changed();
+    this.lobbyList = _.toArray(data);
+    this.lobbyListDep.changed();
+  });
+
+  this.stream.on('channel-chat', (userId, message) => {
+    this.chatList.push({userId: userId, message: message});
+    this.chatListDep.changed();
   });
 });
 
 Template.channel.onDestroyed(function() {
-  console.log('channel onDestroyed');
   if (this.stream) {
     delete Meteor.StreamerCentral.instances['test'];
     this.stream = null;
   }
-})
+});
 
 Template.channel.helpers({
   getLobbies() {
-    Template.instance().lobbiesDep.depend();
-    console.log(Template.instance().lobbies);
-    return Template.instance().lobbies;
+    Template.instance().lobbyListDep.depend();
+    return Template.instance().lobbyList;
+  },
+
+  getChatList() {
+    Template.instance().chatListDep.depend();
+    return Template.instance().chatList;
   }
 });
 
 Template.channel.events({
-  'click .create-lobby'(event) {
+  'click #create-lobby-button'(event) {
     event.preventDefault();
     Meteor.call('createLobby', Meteor.userId(), (err, res) => {
       if (res) {
@@ -49,5 +63,13 @@ Template.channel.events({
         console.log('Cannot join this lobby.');
       }
     });
-  }
+  },
+
+  'keypress .ui.input input'(event, instance) {
+    const input = $('.ui.input input');
+    if (event.which === 13) {
+      Meteor.call('chatChannel', Meteor.userId(), input.val());
+      input.val('');
+    }
+  },
 });

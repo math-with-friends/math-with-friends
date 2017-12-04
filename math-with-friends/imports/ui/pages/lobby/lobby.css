@@ -1,12 +1,4 @@
-.chat {
+#chat {
   height: 150px;
   overflow-y: scroll;
-}
-
-.ui.input {
-  width: 100%;
-}
-
-.controls {
-  margin-bottom: 1rem;
 }

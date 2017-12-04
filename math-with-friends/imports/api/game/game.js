@@ -11,7 +11,7 @@ export default class Game {
     games[this.id] = this;
 
     Meteor.setInterval(() => this.update(), 5000);
-    Meteor.setInterval(() => this.send(), 1000/44);
+    Meteor.setInterval(() => this.send(), 40);
   }
 
   update() {

@@ -1,6 +1,5 @@
 <template name="lobby">
   <div class="ui centered container">
-    <h1>Players List</h1>
 
     <!--Players in lobby-->
     <div class="ui four column grid">
@@ -19,7 +18,7 @@
       <!--Chat-->
       <div class="twelve wide column">
         <div class="ui segment">
-          <div class="chat">
+          <div id="chat">
             {{#each getChatList}}
               <b>{{userId}}:</b> {{message}} <br>
             {{/each}}

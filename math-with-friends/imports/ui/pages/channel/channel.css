@@ -1,0 +1,34 @@
+#lobby-list {
+  height: 150px;
+  overflow-y: scroll;
+}
+
+#profile-view {
+  height: 100%;
+}
+
+#chat {
+  height: 100px;
+  overflow-y: scroll;
+}
+
+#users-online-view {
+  height: 100%;
+}
+
+#create-lobby-button {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+}
+
+img {
+  display: block;
+  height: 130px;
+  margin: 0 auto;
+}
+
+svg {
+  fill: #dedede!important;
+  stroke: #dedede!important;
+}
