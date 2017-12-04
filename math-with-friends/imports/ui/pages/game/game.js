@@ -137,7 +137,7 @@ class MainScene {
   }
 
   updateInterpolation() {
-    const renderTimestamp = (new Date()) - (1000 / 44);
+    const renderTimestamp = (new Date()) - (80);
     _.each(this.entities, (entity) => {
       // Do not interpolate our player.
       if (entity.id === this.userId) {

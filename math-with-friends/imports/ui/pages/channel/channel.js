@@ -1,10 +1,11 @@
 import './channel.html';
+import './channel.css';
 
 import '../game/game.js';
 
 Template.channel.onCreated(function() {
-  this.lobbiesList = [];
-  this.lobbiesListDep = new Tracker.Dependency;
+  this.lobbyList = [];
+  this.lobbyListDep = new Tracker.Dependency;
 
   this.chatList = [];
   this.chatListDep = new Tracker.Dependency;
@@ -12,8 +13,8 @@ Template.channel.onCreated(function() {
   this.stream = new Meteor.Streamer('test');
 
   this.stream.on('test', (data) => {
-    this.lobbies = _.toArray(data);
-    this.lobbiesListDep.changed();
+    this.lobbyList = _.toArray(data);
+    this.lobbyListDep.changed();
   });
 
   this.stream.on('channel-chat', (userId, message) => {
@@ -31,8 +32,8 @@ Template.channel.onDestroyed(function() {
 
 Template.channel.helpers({
   getLobbies() {
-    Template.instance().lobbiesListDep.depend();
-    return Template.instance().lobbiesList;
+    Template.instance().lobbyListDep.depend();
+    return Template.instance().lobbyList;
   },
 
   getChatList() {
@@ -42,7 +43,7 @@ Template.channel.helpers({
 });
 
 Template.channel.events({
-  'click .create-lobby'(event) {
+  'click #create-lobby-button'(event) {
     event.preventDefault();
     Meteor.call('createLobby', Meteor.userId(), (err, res) => {
       if (res) {

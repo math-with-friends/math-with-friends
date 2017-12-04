@@ -1,31 +1,57 @@
 <template name="channel">
   <div class="ui container">
 
-    <h1> Lobby List </h1>
-    <div class="ui segment">
-      {{#each getLobbies}}
-        <div class="ui segment">
-          <p>ID: {{id}}</p>
-          <p>State: {{state}}</p>
-          <p>Player Count: {{playerCount}}</p>
-          <button class="ui button join-lobby">Join</button>
-        </div>
-      {{/each}}
-    </div>
-    <button class="create-lobby">Create Lobby</button>
+    <div class="ui two column grid">
 
-    <!--Chat-->
-    <div class="twelve wide column">
-      <div class="ui segment">
-        <div class="chat">
-          {{#each getChatList}}
-            <b>{{userId}}:</b> {{message}} <br>
-          {{/each}}
+      <!--Lobby list-->
+      <div class="twelve wide column">
+        <div class="ui segment">
+          <div id="lobby-list">
+            {{#each getLobbies}}
+              <div class="ui segment">
+                <p>ID: {{id}}</p>
+                <p>State: {{state}}</p>
+                <p>Player Count: {{playerCount}}</p>
+                <button class="ui button join-lobby">Join</button>
+              </div>
+            {{/each}}
+          </div>
+
+          <button id="create-lobby-button" class="ui compact button">Create Lobby</button>
         </div>
       </div>
-      <div class="ui input">
-        <input type="text" placeholder="Type in a message and press ENTER to send...">
+
+      <!--Profile view-->
+      <div class="four wide column">
+        <div id="profile-view" class="ui segment">
+          <img id="icon" src="/img/icon-1.svg">
+        </div>
       </div>
+
+    </div>
+
+    <div class="ui two column grid">
+
+      <!--Chat-->
+      <div class="twelve wide column">
+        <div class="ui segment">
+          <div id="chat">
+            {{#each getChatList}}
+              <b>{{userId}}:</b> {{message}} <br>
+            {{/each}}
+          </div>
+        </div>
+        <div class="ui input">
+          <input type="text" placeholder="Type in a message and press ENTER to send...">
+        </div>
+      </div>
+
+      <div class="four wide column">
+        <div id="users-online-view" class="ui segment">
+          This is the users online view
+        </div>
+      </div>
+
     </div>
 
   </div>
