@@ -8,6 +8,11 @@
   text-align: center;
 }
 
+#profile-icon {
+  height: 150px;
+  margin-bottom: 1.5em;
+}
+
 #chat {
   height: 100px;
   overflow-y: scroll;

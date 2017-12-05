@@ -42,7 +42,7 @@ Template.channel.helpers({
   },
 
   getUsername() {
-    return Meteor.userId();
+    return Meteor.user().profile.userId;
   }
 });
 

@@ -12,6 +12,10 @@ class MainScene {
     this.userId = Meteor.userId();
     this.entities = {};
 
+    this.lastUpdate = new Date();
+    // Assume 80 to be the default packet latency.
+    this.latency = 80;
+
     // this.stream = new Meteor.Streamer(this.gameId);
 
   }
@@ -23,8 +27,8 @@ class MainScene {
 
   // Required.
   preload() {
-    this.game.load.image('player', 'img/bird.png');
-    this.game.load.image('background', 'img/debug-grid.png');
+    this.game.load.image('player', 'img/icon-1.svg');
+    this.game.load.image('background', 'img/background.svg');
   }
 
   // Required.
@@ -35,8 +39,8 @@ class MainScene {
   }
 
   createWorld() {
-    this.game.add.tileSprite(0, 0, 1920, 1920, 'background');
-    this.game.world.setBounds(0, 0, 1920, 1920);
+    this.game.add.tileSprite(0, 0, 2000, 500, 'background');
+    this.game.world.setBounds(0, 0, 2000, 500);
 
     // Allows smooth rendering.
     this.game.renderer.renderSession.roundPixels = true;
@@ -69,6 +73,7 @@ class MainScene {
 
   createListeners() {
     this.stream.on('game-update', (data) => {
+      this.calculateLatency();
       this.handleServerMessage(data);
     });
 
@@ -79,6 +84,12 @@ class MainScene {
     $(window).bind('beforeunload', function () {
       Meteor.call('removePlayer', this.gameId, this.userId);
     });
+  }
+
+  calculateLatency() {
+    const current = new Date();
+    this.latency = current - this.lastUpdate;
+    this.lastUpdate = current;
   }
 
   handleServerMessage(data) {
@@ -138,7 +149,8 @@ class MainScene {
   }
 
   updateInterpolation() {
-    const renderTimestamp = (new Date()) - (80);
+    console.log(this.latency);
+    const renderTimestamp = new Date() - 80 - this.latency;
     _.each(this.entities, (entity) => {
       // Do not interpolate our player.
       if (entity.id === this.userId) {
@@ -169,7 +181,7 @@ Template.game.onCreated(function () {
   // Things to check before user sees game:
   // - User is logged in
   // - User's joined game exists
-  this.game = new Phaser.Game(500, 200, Phaser.CANVAS, 'canvas', undefined, true);
+  this.game = new Phaser.Game(500, 500, Phaser.CANVAS, 'canvas', undefined, true);
   this.id = null;
   this.pingHandler = null;
   this.stream = null;

@@ -5,5 +5,6 @@ Accounts.onCreateUser(function(options, user) {
   user.profile = {};
   user.profile.gameId = '';
   user.profile.lobbyId = '';
+  user.profile.userId = user.services.cas.id;
   return user;
 });
