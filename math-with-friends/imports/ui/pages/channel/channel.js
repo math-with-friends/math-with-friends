@@ -76,4 +76,9 @@ Template.channel.events({
       input.val('');
     }
   },
+
+  'click #edit-profile-button'(event, instance) {
+    event.preventDefault();
+    Session.set('template', 'User_Profile');
+  }
 });
