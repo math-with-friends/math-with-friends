@@ -12,6 +12,8 @@ class MainScene {
     this.userName = Meteor.user().profile.userName;
     this.entities = {};
 
+    this.lines = [];
+
     this.lastUpdate = new Date();
     // Assume 80 to be the default packet latency.
     this.latency = 80;
@@ -27,8 +29,8 @@ class MainScene {
 
   // Required.
   preload() {
-    this.game.load.image('player', 'img/icon-1.svg');
-    this.game.load.image('background', 'img/background.svg');
+    this.game.load.image('player', 'img/icon-1.png');
+    this.game.load.image('background', 'img/background.png');
   }
 
   // Required.
@@ -48,16 +50,27 @@ class MainScene {
     // Disables game pausing when browser window is not in focus.
     // Mainly for testing purposes...
     this.game.stage.disableVisibilityChange = true;
+
+    this.lines[0] = new Phaser.Line(500, 250, 500, 500);
+    this.lines[1] = new Phaser.Line(1000, 0, 1000, 250);
+    this.lines[2] = new Phaser.Line(1500, 250, 1500, 500);
+
   }
 
   createPlayer() {
     this.cursor = this.game.input.keyboard.createCursorKeys();
     this.entities[this.userId] = this.add.sprite(0, 0, 'player');
-    this.playerLabel = this.game.add.text(0, 0, this.userName, { font: "30px", fill: "#5a5a5a" });
+
+    this.playerLabel = this.game.add.text(0, 95, this.userName, { font: "20px", fill: "#000000" });
+    this.playerLines = [];
+    this.playerLines[0] = new Phaser.Line;
+    this.playerLines[1] = new Phaser.Line;
+
     this.player = this.entities[this.userId];
     this.player.id = this.userId;
     this.player.positionBuffer = [];
     this.player.addChild(this.playerLabel);
+
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
     this.game.physics.arcade.enable(this.player);
     this.game.physics.arcade.applyGravity = false;
@@ -129,6 +142,8 @@ class MainScene {
   update() {
     this.updatePlayerControl();
     this.updateInterpolation();
+    this.updateCollision();
+    this.updateDebug();
   }
 
   updatePlayerControl() {
@@ -136,22 +151,24 @@ class MainScene {
 
     if (this.cursor.left.isDown) {
       this.player.body.velocity.x = -100;
-    } else
-      if (this.cursor.right.isDown) {
-        this.player.body.velocity.x = 100;
-      }
+    } else if (this.cursor.right.isDown) {
+      this.player.body.velocity.x = 100;
+    }
+
     if (this.cursor.up.isDown) {
       this.player.body.velocity.y = -100;
-    } else
-      if (this.cursor.down.isDown) {
-        this.player.body.velocity.y = 100;
-      }
+    } else if (this.cursor.down.isDown) {
+      this.player.body.velocity.y = 100;
+    }
+
+    this.playerLines[0].setTo(this.player.position.x, this.player.position.y, this.player.position.x + this.player.width, this.player.position.y);
+    this.playerLines[1].setTo(this.player.position.x, this.player.position.y + this.player.height, this.player.position.x + this.player.width, this.player.position.y + this.player.height);
 
     Meteor.call('sendPlayerPosition', this.gameId, this.userId, this.player.body.position.x, this.player.body.position.y);
   }
 
   updateInterpolation() {
-    console.log(this.latency);
+    // console.log(this.latency);
     const renderTimestamp = new Date() - 80 - this.latency;
     _.each(this.entities, (entity) => {
       // Do not interpolate our player.
@@ -177,13 +194,37 @@ class MainScene {
       }
     });
   }
+
+  updateCollision() {
+    _.each(this.lines, (line) => {
+      if (this.playerLines[0].intersects(line)) {
+        window.alert('Wrong answer! Game over.');
+        Session.set('template', 'channel');
+      }
+    });
+
+    _.each(this.lines, (line) => {
+      if (this.playerLines[1].intersects(line)) {
+        window.alert('Wrong answer! Game over.');
+        Session.set('template', 'channel');
+      }
+    });
+  }
+
+  updateDebug() {
+    this.game.debug.geom(this.playerLines[0]);
+    this.game.debug.geom(this.playerLines[1]);
+    _.each(this.lines, (line) => {
+      this.game.debug.geom(line);
+    });
+  }
 }
 
 Template.game.onCreated(function () {
   // Things to check before user sees game:
   // - User is logged in
   // - User's joined game exists
-  this.game = new Phaser.Game(500, 500, Phaser.CANVAS, 'game-canvas', undefined, true, false);
+  this.game = new Phaser.Game(500, 500, Phaser.AUTO, 'game-canvas', undefined, true, false);
   this.id = null;
   this.pingHandler = null;
   this.stream = null;
