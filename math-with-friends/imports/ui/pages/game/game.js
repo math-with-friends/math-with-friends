@@ -8,8 +8,8 @@ class MainScene {
   constructor(game) {
     this.game = game;
     this.gameId = Meteor.user().profile.gameId;
-    console.log('GAMEID: ', this.gameId);
     this.userId = Meteor.userId();
+    this.userName = Meteor.user().profile.userName;
     this.entities = {};
 
     this.lastUpdate = new Date();
@@ -53,9 +53,11 @@ class MainScene {
   createPlayer() {
     this.cursor = this.game.input.keyboard.createCursorKeys();
     this.entities[this.userId] = this.add.sprite(0, 0, 'player');
+    this.playerLabel = this.game.add.text(0, 0, this.userName, { font: "30px", fill: "#5a5a5a" });
     this.player = this.entities[this.userId];
     this.player.id = this.userId;
     this.player.positionBuffer = [];
+    this.player.addChild(this.playerLabel);
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
     this.game.physics.arcade.enable(this.player);
     this.game.physics.arcade.applyGravity = false;
@@ -181,7 +183,7 @@ Template.game.onCreated(function () {
   // Things to check before user sees game:
   // - User is logged in
   // - User's joined game exists
-  this.game = new Phaser.Game(500, 500, Phaser.CANVAS, 'canvas', undefined, true);
+  this.game = new Phaser.Game(500, 500, Phaser.CANVAS, 'game-canvas', undefined, true, false);
   this.id = null;
   this.pingHandler = null;
   this.stream = null;
@@ -207,10 +209,13 @@ Template.game.onCreated(function () {
 });
 
 Template.game.onDestroyed(function () {
+  this.game.destroy();
+
   if (this.stream) {
     delete Meteor.StreamerCentral.instances[this.id];
     this.stream = null;
   }
+
   if (this.pingHandler) {
     Meteor.clearInterval(this.pingHandler);
   }
