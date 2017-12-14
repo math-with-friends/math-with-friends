@@ -56,7 +56,7 @@ Meteor.methods({
 
     Meteor.users.update({_id: userId}, {$set: {'profile.gameId': gameId}});
 
-    game.addPlayer(userId, 0, 0);
+    game.addPlayer(userId, 0, 170);
     return true;
   },
   removePlayer(gameId, userId) {

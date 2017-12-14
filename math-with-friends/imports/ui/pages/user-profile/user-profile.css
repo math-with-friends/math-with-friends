@@ -1,20 +1,24 @@
-.ui.huge.header {
-  margin-top: 5rem;
-  margin-bottom: 0;
-  font-size: 4rem;
-  font-weight: normal;
-}
+/*.ui.huge.header {*/
+  /*margin-top: 5rem;*/
+  /*margin-bottom: 0;*/
+  /*font-size: 4rem;*/
+  /*font-weight: normal;*/
+/*}*/
 
-.ui.large.header {
-  margin-top: 0.5rem;
-  margin-bottom: 4rem;
-}
+/*.ui.large.header {*/
+  /*margin-top: 0.5rem;*/
+  /*margin-bottom: 4rem;*/
+/*}*/
 
-.ui.menu {
-  border: none;
-  box-shadow: none;
-}
+/*.ui.menu {*/
+  /*border: none;*/
+  /*box-shadow: none;*/
+/*}*/
 
-.ui.menu .item:before {
-  background: none;
+/*.ui.menu .item:before {*/
+  /*background: none;*/
+/*}*/
+
+.icon.column {
+  text-align: center!important;
 }

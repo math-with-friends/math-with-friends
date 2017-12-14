@@ -9,10 +9,15 @@ class MainScene {
     this.game = game;
     this.gameId = Meteor.user().profile.gameId;
     this.userId = Meteor.userId();
+    this.iconId = Meteor.user().profile.iconId;
     this.userName = Meteor.user().profile.userName;
     this.entities = {};
 
     this.lines = [];
+    this.blocks = [];
+    this.questions = [];
+    this.trues = [];
+    this.falses = [];
 
     this.lastUpdate = new Date();
     // Assume 80 to be the default packet latency.
@@ -29,7 +34,7 @@ class MainScene {
 
   // Required.
   preload() {
-    this.game.load.image('player', 'img/icon-1.png');
+    this.game.load.image('player', `img/icon-${this.iconId}.png`);
     this.game.load.image('background', 'img/background.png');
   }
 
@@ -55,11 +60,25 @@ class MainScene {
     this.lines[1] = new Phaser.Line(1000, 0, 1000, 250);
     this.lines[2] = new Phaser.Line(1500, 250, 1500, 500);
 
+    this.blocks[0] = new Phaser.Line(475, 250, 525, 250);
+    this.blocks[1] = new Phaser.Line(975, 250, 1025, 250);
+    this.blocks[2] = new Phaser.Line(1475, 250, 1525, 250);
+
+    this.questions[0] = this.game.add.text(150, 50, '1 + 1 = 2', { font: "30px", fill: "#000000" });
+    this.questions[1] = this.game.add.text(650, 50, '11 + 11 = 12', { font: "30px", fill: "#000000" });
+    this.questions[2] = this.game.add.text(1150, 50, '111 + 111 = 222', { font: "30px", fill: "#000000" });
+
+    this.trues[0] = this.game.add.text(475, 125, 'True', { font: "30px", fill: "#000000" });
+    this.trues[1] = this.game.add.text(975, 125, 'True', { font: "30px", fill: "#000000" });
+    this.trues[2] = this.game.add.text(1475, 125, 'True', { font: "30px", fill: "#000000" });
+
+    this.falses[0] = this.game.add.text(475, 375, 'False', { font: "30px", fill: "#000000" });
+    this.falses[1] = this.game.add.text(975, 375, 'False', { font: "30px", fill: "#000000" });
+    this.falses[2] = this.game.add.text(1475, 375, 'False', { font: "30px", fill: "#000000" });
   }
 
   createPlayer() {
-    this.cursor = this.game.input.keyboard.createCursorKeys();
-    this.entities[this.userId] = this.add.sprite(0, 0, 'player');
+    this.entities[this.userId] = this.add.sprite(0, 170, 'player');
 
     this.playerLabel = this.game.add.text(0, 95, this.userName, { font: "20px", fill: "#000000" });
     this.playerLines = [];
@@ -71,10 +90,17 @@ class MainScene {
     this.player.positionBuffer = [];
     this.player.addChild(this.playerLabel);
 
+    this.cursor = this.game.input.keyboard.createCursorKeys();
+    this.spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    this.spaceKey.onDown.add(function() { this.body.velocity.y = -400; }, this.player);
+
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
     this.game.physics.arcade.enable(this.player);
     this.game.physics.arcade.applyGravity = false;
     this.game.camera.follow(this.player);
+
+    this.player.body.gravity.y = 750;
+    this.player.body.velocity.x = 100;
 
     // In case player disconnects, refreshes, etc., restore player's position according to
     // what's on the server.
@@ -147,19 +173,17 @@ class MainScene {
   }
 
   updatePlayerControl() {
-    this.player.body.velocity.set(0, 0);
+    // if (this.cursor.left.isDown) {
+    //   this.player.body.velocity.x = -100;
+    // } else if (this.cursor.right.isDown) {
+    //   this.player.body.velocity.x = 100;
+    // }
 
-    if (this.cursor.left.isDown) {
-      this.player.body.velocity.x = -100;
-    } else if (this.cursor.right.isDown) {
-      this.player.body.velocity.x = 100;
-    }
-
-    if (this.cursor.up.isDown) {
-      this.player.body.velocity.y = -100;
-    } else if (this.cursor.down.isDown) {
-      this.player.body.velocity.y = 100;
-    }
+    // if (this.cursor.up.isDown) {
+    //   this.player.body.velocity.y = -100;
+    // } else if (this.cursor.down.isDown) {
+    //   this.player.body.velocity.y = 100;
+    // }
 
     this.playerLines[0].setTo(this.player.position.x, this.player.position.y, this.player.position.x + this.player.width, this.player.position.y);
     this.playerLines[1].setTo(this.player.position.x, this.player.position.y + this.player.height, this.player.position.x + this.player.width, this.player.position.y + this.player.height);
@@ -209,13 +233,31 @@ class MainScene {
         Session.set('template', 'channel');
       }
     });
+
+    if (this.player.body.position.y > 500) {
+      window.alert('You fell! Game over.');
+      Session.set('template', 'channel');
+    }
+
+    if (this.player.body.position.y < -100) {
+      window.alert('Out of boundaries! Game over.');
+      Session.set('template', 'channel');
+    }
+
+    if (this.player.body.position.x > 2000) {
+      window.alert('Congrats! You won.');
+      Session.set('template', 'channel');
+    }
   }
 
   updateDebug() {
     this.game.debug.geom(this.playerLines[0]);
     this.game.debug.geom(this.playerLines[1]);
-    _.each(this.lines, (line) => {
-      this.game.debug.geom(line);
+    // _.each(this.lines, (line) => {
+    //   this.game.debug.geom(line);
+    // });
+    _.each(this.blocks, (block) => {
+      this.game.debug.geom(block);
     });
   }
 }
@@ -247,6 +289,16 @@ Template.game.onCreated(function () {
       console.log('game check failed');
     }
   });
+});
+
+Template.game.helpers({
+  isHelperVisible() {
+    if (Session.get('helper')) {
+      return 'visible';
+    } else {
+      return 'not-visible';
+    }
+  }
 });
 
 Template.game.onDestroyed(function () {

@@ -75,8 +75,8 @@ export default class Lobby {
     }
   }
 
-  chat(userId, message) {
-    this.stream.emit('lobby-chat', userId, message);
+  chat(userId, userName, message) {
+    this.stream.emit('lobby-chat', userId, userName, message);
   }
 
   ping(userId) {
@@ -85,13 +85,13 @@ export default class Lobby {
     }
   }
 
-  addPlayer(userId) {
+  addPlayer(userId, userName) {
     // Cannot join game after game started.
     if (this.state == 0 || this.state == 1) {
 
       // Don't re-add existing players.
       if (!this.players[userId]) {
-        this.players[userId] = { id: userId, ready: false, ping: new Date()};
+        this.players[userId] = { id: userId, name: userName, ready: false, ping: new Date()};
 
         // If this is the first player to ever join the lobby, enable destroying of lobby.
         if (this.state == 0) {

@@ -23,5 +23,13 @@ Template.App_home.events({
     } else {
       Meteor.loginWithCas();
     }
+  },
+
+  'click #helper'(event, instance) {
+    if (Session.get('helper')) {
+      Session.set('helper', false);
+    } else {
+      Session.set('helper', true);
+    }
   }
 })

@@ -1,13 +1,17 @@
 <template name="lobby">
   <div class="ui centered container">
 
+    <p class="{{isHelperVisible}}">
+      Players: Maximum is 4 players in a lobby. Game will start when all players are ready.
+    </p>
+
     <!--Players in lobby-->
     <div class="ui four column grid">
       {{#each getPlayersList}}
         <div class="column">
           <div class="ui segment">
-            ID: {{id}} <br>
-            Ready: {{#if ready}} true {{else}} false {{/if}}
+            Name: {{name}} <br>
+            Ready: {{#if ready}} True {{else}} False {{/if}}
           </div>
         </div>
       {{/each}}
@@ -15,25 +19,42 @@
 
     <div class="ui two column grid">
 
-      <!--Chat-->
-      <div class="twelve wide column">
-        <div class="ui segment">
-          <div id="chat">
-            {{#each getChatList}}
-              <b>{{userId}}:</b> {{message}} <br>
-            {{/each}}
-          </div>
+      <div id="helper-row" class="row">
+        <div class="twelve wide column">
+          <p class="{{isHelperVisible}}">
+            Chat: Type in a message and press enter to send a message to the players in the
+            current lobby.
+          </p>
         </div>
-        <div class="ui input">
-          <input type="text" placeholder="Type in a message and press ENTER to send...">
+
+        <div class="four wide column">
+          <p class="{{isHelperVisible}}">
+            Controls: Press "Ready" to signal ready and "Exit" to return to channel.
+          </p>
         </div>
       </div>
 
-      <!--Controls-->
-      <div class="four wide column">
-        <div class="controls">
-          <button class="ui button ready">Ready</button>
-          <button class="ui button exit">Exit</button>
+      <div class="row">
+        <!--Chat-->
+        <div class="twelve wide column">
+          <div class="ui segment">
+            <div id="chat">
+              {{#each getChatList}}
+                <b>{{userName}}:</b> {{message}} <br>
+              {{/each}}
+            </div>
+          </div>
+          <div class="ui input">
+            <input type="text" placeholder="Type in a message and press ENTER to send...">
+          </div>
+        </div>
+
+        <!--Controls-->
+        <div class="four wide column">
+          <div class="controls">
+            <button class="ui button ready">Ready</button>
+            <button class="ui button exit">Exit</button>
+          </div>
         </div>
       </div>
 

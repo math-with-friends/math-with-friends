@@ -2,12 +2,12 @@ import Lobby from './lobby.js';
 import { Random } from 'meteor/random';
 
 Meteor.methods({
-  createLobby(userId) {
+  createLobby(userId, userName) {
     const lobbyId = Random.id();
     const lobby = new Lobby(lobbyId);
 
     // addPlayer(userId) returns true if player can be added, returns false otherwise.
-    if (lobby.addPlayer(userId)) {
+    if (lobby.addPlayer(userId, userName)) {
       Meteor.users.update({_id: userId}, {$set: {'profile.lobbyId': lobbyId}});
       return true;
     }
@@ -15,11 +15,11 @@ Meteor.methods({
     return false;
   },
 
-  joinLobby(lobbyId, userId) {
+  joinLobby(lobbyId, userId, userName) {
     const lobby = lobbies[lobbyId];
 
     // addPlayer(userId) returns true if player can be added, returns false otherwise.
-    if (lobby.addPlayer(userId)) {
+    if (lobby.addPlayer(userId, userName)) {
       Meteor.users.update({_id: userId}, {$set: {'profile.lobbyId': lobbyId}});
       return true;
     };
@@ -36,13 +36,13 @@ Meteor.methods({
     return true;
   },
 
-  chatLobby(lobbyId, userId, message) {
+  chatLobby(lobbyId, userId, userName, message) {
     const lobby = lobbies[lobbyId];
     if (!lobby) {
       throw new Meteor.Error('lobby-nonexistent', "Cannot chat in a lobby that doesn't exist. Lobby ID: " + lobbyId);
     }
 
-    lobby.chat(userId, message);
+    lobby.chat(userId, userName, message);
   },
 
   pingLobby(lobbyId, userId) {

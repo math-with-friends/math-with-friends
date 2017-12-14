@@ -7,14 +7,17 @@ Meteor.startup(() => {
 
   Accounts.onLogin(() => {
     console.log('onLogin');
-    const gameId = Meteor.user().profile.gameId;
-    const userId = Meteor.userId();
+
+    Meteor.call('loginChannel', Meteor.userId());
 
     Session.set('template', 'channel');
   });
 
   Accounts.onLogout(() => {
     console.log('onLogout');
+
+    Meteor.call('logoutChannel', Meteor.userId());
+
     Session.set('template', 'landing');
   });
 });

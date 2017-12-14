@@ -22,6 +22,11 @@
   height: 100%;
 }
 
+#helper-row {
+  padding-bottom: 0!important;
+  padding-top: 0!important;
+}
+
 /*#create-lobby-button {*/
   /*position: absolute;*/
   /*bottom: 1rem;*/

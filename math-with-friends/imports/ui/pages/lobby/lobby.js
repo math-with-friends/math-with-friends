@@ -28,8 +28,8 @@ Template.lobby.onCreated(function () {
         });
       });
 
-      this.stream.on('lobby-chat', (userId, message) => {
-        this.chatList.push({userId: userId, message: message});
+      this.stream.on('lobby-chat', (userId, userName, message) => {
+        this.chatList.push({userName: userName, message: message});
         this.chatListDep.changed();
       });
 
@@ -60,6 +60,14 @@ Template.lobby.helpers({
   getChatList() {
     Template.instance().chatListDep.depend();
     return Template.instance().chatList;
+  },
+
+  isHelperVisible() {
+    if (Session.get('helper')) {
+      return 'visible';
+    } else {
+      return 'not-visible';
+    }
   }
 });
 
@@ -72,7 +80,7 @@ Template.lobby.events({
   'keypress .ui.input input'(event, instance) {
     const input = $('.ui.input input');
     if (event.which === 13) {
-      Meteor.call('chatLobby', instance.id, Meteor.userId(), input.val());
+      Meteor.call('chatLobby', instance.id, Meteor.userId(), Meteor.user().profile.userName, input.val());
       input.val('');
     }
   },

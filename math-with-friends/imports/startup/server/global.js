@@ -25,11 +25,25 @@ Meteor.startup(() => {
         delete lobbies[lobby.id];
       }
     });
+
+    stream.emit('users-online', Meteor.users.find({'profile.isOn': true}).fetch());
   }, 3000);
 
   Meteor.methods({
-    chatChannel(userId, message) {
-      stream.emit('channel-chat', userId, message);
+    chatChannel(userId, userName, message) {
+      stream.emit('channel-chat', userId, userName, message);
+    },
+
+    changeIcon(userId, iconId) {
+      Meteor.users.update({_id: userId}, {$set: {'profile.iconId': iconId}});
+    },
+
+    loginChannel(userId) {
+      Meteor.users.update({_id: userId}, {$set: {'profile.isOn': true}});
+    },
+
+    logoutChannel(userId) {
+      Meteor.users.update({_id: userId}, {$set: {'profile.isOn': false}});
     }
   });
 });

@@ -2,40 +2,57 @@
   <div class="ui container">
 
     <div class="ui two column grid">
+      <div id="helper-row" class="row">
+        <div class="twelve wide column">
+          <p class="{{isHelperVisible}}">
+            Lobby list: Click on "Create Lobby" to make a new lobby to play games with other players.
+            Otherwise, click on "Join" on any existing lobbies to join a currently active room.
+            Lobbies in state 2 and 3 cannot be joined because they are either empty or in a game.
+          </p>
+        </div>
 
-      <!--Lobby list-->
-      <div class="twelve wide column">
-        <div class="ui segment">
-          <div id="lobby-list" class="ui divided items">
-            {{#each getLobbies}}
-              <div class="item">
-                <div class="content">
-                  <div class="header">
-                    ID: {{id}}
-                  </div>
-                  <div class="meta">
-                    State: {{state}} Player Count: {{playerCount}}
-                  </div>
-                  <div class="description">
-                    <button class="ui compact basic button join-lobby">Join</button>
-                  </div>
-                </div>
-              </div>
-            {{/each}}
-          </div>
-
-          <button id="create-lobby-button" class="ui compact basic button">Create Lobby</button>
+        <div class="four wide column">
+          <p class="{{isHelperVisible}}">
+            Profile view: Click on "Edit Profile" change your profile icon.
+          </p>
         </div>
       </div>
 
-      <!--Profile view-->
-      <div class="four wide column">
-        <div id="profile-view" class="ui segment">
-          <div id="profile-icon">
-            <img src="/img/icon-1.svg">
-            <p>{{getUsername}}</p>
+      <div class="row">
+        <!--Lobby list-->
+        <div class="twelve wide column">
+          <div class="ui segment">
+            <div id="lobby-list" class="ui divided items">
+              {{#each getLobbies}}
+                <div class="item">
+                  <div class="content">
+                    <div class="header">
+                      ID: {{id}}
+                    </div>
+                    <div class="meta">
+                      State: {{state}} Player Count: {{playerCount}}
+                    </div>
+                    <div class="description">
+                      <button class="ui compact basic button join-lobby">Join</button>
+                    </div>
+                  </div>
+                </div>
+              {{/each}}
+            </div>
+
+            <button id="create-lobby-button" class="ui compact basic button">Create Lobby</button>
           </div>
-          <button class="ui compact basic button" id="edit-profile-button"> Edit Profile </button>
+        </div>
+
+        <!--Profile view-->
+        <div class="four wide column">
+          <div id="profile-view" class="ui segment">
+            <div id="profile-icon">
+              <img src="/img/icon-{{getIconId}}.svg">
+              <p>{{getUsername}}</p>
+            </div>
+            <button class="ui compact basic button" id="edit-profile-button"> Edit Profile</button>
+          </div>
         </div>
       </div>
 
@@ -43,23 +60,41 @@
 
     <div class="ui two column grid">
 
-      <!--Chat-->
-      <div class="twelve wide column">
-        <div class="ui segment">
-          <div id="chat">
-            {{#each getChatList}}
-              <b>{{userId}}:</b> {{message}} <br>
-            {{/each}}
-          </div>
+      <div id="helper-row" class="row">
+        <div class="twelve wide column">
+          <p class="{{isHelperVisible}}">
+            Chat: Type in your message and press enter to send a message to all the players in the channel.
+          </p>
         </div>
-        <div class="ui input">
-          <input type="text" placeholder="Type in a message and press ENTER to send...">
+
+        <div class="four wide column">
+          <p class="{{isHelperVisible}}">
+            Users online view: List of the players in channel.
+          </p>
         </div>
       </div>
 
-      <div class="four wide column">
-        <div id="users-online-view" class="ui segment">
-          This is the users online view
+      <div class="row">
+        <!--Chat-->
+        <div class="twelve wide column">
+          <div class="ui segment">
+            <div id="chat">
+              {{#each getChatList}}
+                <b>{{userName}}:</b> {{message}} <br>
+              {{/each}}
+            </div>
+          </div>
+          <div class="ui input">
+            <input type="text" placeholder="Type in a message and press ENTER to send...">
+          </div>
+        </div>
+
+        <div class="four wide column">
+          <div id="users-online-view" class="ui segment">
+            {{#each getUserList}}
+              {{profile.userName}}<br>
+            {{/each}}
+          </div>
         </div>
       </div>
 
